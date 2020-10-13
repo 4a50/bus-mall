@@ -98,6 +98,7 @@ function clickHandler(event) {
   //console.log(timesVoted, numberRounds);
   if (timesVoted > numberRounds) { //If we exceed the number of authorized click, disable the event listener
     imageContainer.removeEventListener('click', clickHandler);
+    displayChart();
 
 
   }
@@ -105,7 +106,6 @@ function clickHandler(event) {
     generateThreeImages();
     displayImages();
   }
-  displayChart();
 }
 
 function chartColorPaletteSetup() { //color and border color setup returns colorArray and borderColorArray
@@ -148,7 +148,6 @@ function chartTitleArray() {
   for (var i = 0; i < allProducts.length; i++) {
     titleArray.push(allProducts[i].titleAlt);
   }
-  debugger
   return titleArray;
 }
 
@@ -158,33 +157,23 @@ function chartDataSetup() {
     chartData.push(allProducts[i].numberClicks);
   }
   return chartData;
-
-
-
-  /// Set up the title Arrays
-
-
-
-  /// set up the data Arrays
-
-
 }
 
 function displayChart() {
-  console.log('labelTitles: ' + labelTitles)
 
 
 
+  var graphColors = chartColorPaletteSetup();
   var ctx = document.getElementById('myChart').getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: [labelTitles],
+      labels: chartTitleArray(),
       datasets: [{
         label: '# of Votes',
-        data: productClickData,
-        backgroundColor: colorPalette,
-        borderColor: [borderColorPalette],
+        data: chartDataSetup(),
+        backgroundColor: graphColors[0],
+        borderColor: graphColors[1],
         borderWidth: 3
       }]
     },
@@ -221,12 +210,8 @@ new Product('unicorn', 'img/unicorn.jpg');
 new Product('wine-glass', 'img/wine-glass.jpg');
 
 
-// generateThreeImages();
-// displayImages();
-// displayChart();
+generateThreeImages();
+displayImages();
 //TODO: Appears that clicking the results button or off the image will result in the clickHandler being activate.  If statement not catching it in function.
 imageContainer.addEventListener('click', clickHandler);
 document.getElementById('disp-results').addEventListener('click', displayResults);
-
-
-console.log(chartDataSetup());
