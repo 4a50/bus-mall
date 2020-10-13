@@ -44,12 +44,12 @@ function generateThreeImages() { //You will generate three different index numbe
 
     }
 
-    selectedImages.push(randomImageIndex); //add the image index be to one of the three to be used    
+    selectedImages.push(randomImageIndex); //add the image index be to one of the three to be used
     updateNumberDisplayed(randomImageIndex);
   }
 }
 function updateNumberDisplayed(indexNum) {
-  allProducts[indexNum].numberDisplayed++
+  allProducts[indexNum].numberDisplayed++;
 
 }
 
@@ -66,7 +66,6 @@ function displayResults() { //Displays the final results after all rounds are co
   var attachMain = document.getElementById('results-display');
   attachMain.innerHTML = '';
 
-
   var getP;
   for (var i = 0; i < allProducts.length; i++) {
     getP = document.createElement('p');
@@ -80,7 +79,7 @@ function displayResults() { //Displays the final results after all rounds are co
 function clickHandler(event) {
   //Determine which product has the title of the event that was clicked.
   //search through each product until found, if not throw new error
-  console.log(event.target.title);
+  //console.log(event.target.title);
 
   if (event.target.title === 'button' || '' || undefined || NaN) {
     console.log('Image Not Selected');
@@ -96,9 +95,10 @@ function clickHandler(event) {
 
   }
   timesVoted++;
-  console.log(timesVoted, numberRounds);
+  //console.log(timesVoted, numberRounds);
   if (timesVoted > numberRounds) { //If we exceed the number of authorized click, disable the event listener
     imageContainer.removeEventListener('click', clickHandler);
+    displayChart();
 
 
   }
@@ -106,6 +106,87 @@ function clickHandler(event) {
     generateThreeImages();
     displayImages();
   }
+}
+
+function chartColorPaletteSetup() { //color and border color setup returns colorArray and borderColorArray
+  var colorPaletteNumElements = [];
+  var borderColorPaletteNumElements = [];
+  var t = 0;
+
+  var colorPalette = ['rgba(0, 0, 255, 0.3)', //blue
+    'rgba(255, 0, 0, 0.3)', //red
+    'rgba(255, 255, 0, 0.3)',//yellow
+    'rgba(0, 255, 0, 0.3)', //green
+    'rgba(102, 0, 255, 0.3)', //purple
+    'rgba(0,0,0,0.3)']; //black
+  for (var i = 0; i < allProducts.length; i++) {
+    colorPaletteNumElements.push(colorPalette[t]);
+    t++;
+    if (t >= colorPalette.length) { t = 0; }
+  }
+
+  borderColorPaletteNumElements = [];
+  var borderColorPalette = [
+    'rgba(255, 99, 132, 1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)'
+  ];
+  t = 0;
+  for (var j = 0; j < allProducts.length; j++) {
+    borderColorPaletteNumElements.push(borderColorPalette[t]);
+    t++;
+    if (t >= colorPalette.length) { t = 0; }
+  }
+  return [colorPaletteNumElements, borderColorPaletteNumElements];
+}
+
+function chartTitleArray() {
+  var titleArray = []
+  for (var i = 0; i < allProducts.length; i++) {
+    titleArray.push(allProducts[i].titleAlt);
+  }
+  return titleArray;
+}
+
+function chartDataSetup() {
+  var chartData = [];
+  for (var i = 0; i < allProducts.length; i++) {
+    chartData.push(allProducts[i].numberClicks);
+  }
+  return chartData;
+}
+
+function displayChart() {
+
+
+
+  var graphColors = chartColorPaletteSetup();
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: chartTitleArray(),
+      datasets: [{
+        label: '# of Votes',
+        data: chartDataSetup(),
+        backgroundColor: graphColors[0],
+        borderColor: graphColors[1],
+        borderWidth: 3
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
 }
 new Product('bathroom', 'img/bathroom.jpg'); // fileName, filePath
 new Product('bubblegum', 'img/bubblegum.jpg');
@@ -128,10 +209,9 @@ new Product('shark', 'img/shark.jpg');
 new Product('unicorn', 'img/unicorn.jpg');
 new Product('wine-glass', 'img/wine-glass.jpg');
 
+
 generateThreeImages();
 displayImages();
-//TODO: Appears that clicking the results button or off the image will result in the clickHandler being activate.  If statment not catching it in function.
+//TODO: Appears that clicking the results button or off the image will result in the clickHandler being activate.  If statement not catching it in function.
 imageContainer.addEventListener('click', clickHandler);
 document.getElementById('disp-results').addEventListener('click', displayResults);
-
-
