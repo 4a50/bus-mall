@@ -1,9 +1,31 @@
+html {
+  width: 1400px;
+}
+h1 {
+  font-size: 129px;
+  text-align: center;
+  font-family: 'Righteous', cursive;
+  padding: 40px 0px;
+ 
+}
+h2 {
+  font-size: 73px;
+  text-align: center;
+  font-family: 'Righteous', cursive;
+}
 h4 {
   font-size: 24px;
 }
 
-html {
-  width: 1200px;
+header{
+ padding: 50px 50px;
+ border: 3px solid purple;
+ background-color: rgba(0, 0, 255, .6);
+}
+#images-3{
+  padding: 50px 50px;
+  border: 3px solid purple;
+  background-color: rgba(0, 0, 255, .3);;
 }
 
 .voteChoice{  
@@ -16,9 +38,14 @@ html {
 }
 #image-display button {
   display: block;
-  background-color: pink;
-  margin:0px 0px 0px 600px;
+  color: white;
+  background-color: purple;
+  margin:25px 0px 0px 600px;
+  font-size: 43px;
 }
 .bold {
   font-weight: bold;
+}
+canvas {
+  border: 3px solid purple;
 }

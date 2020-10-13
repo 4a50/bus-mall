@@ -83,8 +83,8 @@ function clickHandler(event) {
   }
 
 
-  for (var i = 0; i < allProducts.length; i++) {  //Searches for the matching target title to titleAlt
-    if (event.target.title === allProducts[i].titleAlt) {  //if you find it, update the clicks and break the loop
+  for (var i = 0; i < allProducts.length; i++) {//Searches for the matching target title to titleAlt
+    if (event.target.title === allProducts[i].titleAlt) {//if you find it, update the clicks and break the loop
       allProducts[i].numberClicks++;
       break;
     }
@@ -140,7 +140,7 @@ function chartColorPaletteSetup() { //color and border color setup returns color
 }
 
 function chartTitleArray() {
-  var titleArray = []
+  var titleArray = [];
   for (var i = 0; i < allProducts.length; i++) {
     titleArray.push(allProducts[i].titleAlt);
   }
@@ -174,12 +174,27 @@ function displayChart() {
       }]
     },
     options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
+      legend: {
+        labels: {
+          fontSize: 30,
+          fontColor: 'purple',
+
+          scales: {
+            xAxes: [{
+              ticks: {
+                fontSize: 30,
+                fontColor: 'purple'
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 24,
+                fontColor: 'purple'
+              }
+            }]
           }
-        }]
+        }
       }
     }
   });
