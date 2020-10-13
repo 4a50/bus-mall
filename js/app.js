@@ -153,6 +153,11 @@ function chartTitleArray() {
 }
 
 function chartDataSetup() {
+  var chartData = [];
+  for (var i = 0; i < allProducts.length; i++) {
+    chartData.push(allProducts[i].numberClicks);
+  }
+  return chartData;
 
 
 
@@ -224,4 +229,4 @@ imageContainer.addEventListener('click', clickHandler);
 document.getElementById('disp-results').addEventListener('click', displayResults);
 
 
-chartTitleArray();
+console.log(chartDataSetup());
