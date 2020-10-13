@@ -1,5 +1,5 @@
 h4 {
-  font-size: 32px;
+  font-size: 24px;
 }
 
 html {
@@ -9,5 +9,16 @@ html {
 .voteChoice{  
   border: 10px solid purple;
   width: 350px;
-  /* height: 400px; */
+  
+}
+#disp-results {
+  
+}
+#image-display button {
+  display: block;
+  background-color: pink;
+  margin:0px 0px 0px 600px;
+}
+.bold {
+  font-weight: bold;
 }

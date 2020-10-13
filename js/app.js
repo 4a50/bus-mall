@@ -1,11 +1,11 @@
 'use strict';
-var numberRounds = 2;
+var numberRounds = 25;
 var timesVoted = 0;
 var allProducts = [];
 var prevImageDisplay = [];
 var selectedImages = [];
 var imageContainer = document.getElementById('image-display');
-// var btn = document.querySelector('#btn');
+
 
 function Product(fileName, filePath) {
   this.titleAlt = fileName;
@@ -64,12 +64,13 @@ function displayImages() {
 
 function displayResults() { //Displays the final results after all rounds are complete
   var attachMain = document.getElementById('results-display');
+  attachMain.innerHTML = '';
 
-  console.log(attachMain);
+
   var getP;
   for (var i = 0; i < allProducts.length; i++) {
-    getP = document.createElement('h4');
-    getP.innerText = `${allProducts[i].titleAlt} had ${allProducts[i].numberClicks} votes, and was seen ${allProducts[i].numberDisplayed} times`;
+    getP = document.createElement('p');
+    getP.innerHTML = `${allProducts[i].titleAlt} had <span class="bold">${allProducts[i].numberClicks} votes</span>, and was seen <span class="bold">${allProducts[i].numberDisplayed} times</span>`;
 
     attachMain.appendChild(getP);
   }
@@ -79,7 +80,14 @@ function displayResults() { //Displays the final results after all rounds are co
 function clickHandler(event) {
   //Determine which product has the title of the event that was clicked.
   //search through each product until found, if not throw new error
-  console.log('allProducts: ', allProducts.length);
+  console.log(event.target.title);
+
+  if (event.target.title === 'button' || '' || undefined || NaN) {
+    console.log('Image Not Selected');
+    return;
+  }
+
+
   for (var i = 0; i < allProducts.length; i++) {  //Searches for the matching target title to titleAlt
     if (event.target.title === allProducts[i].titleAlt) {  //if you find it, update the clicks and break the loop
       allProducts[i].numberClicks++;
@@ -88,10 +96,11 @@ function clickHandler(event) {
 
   }
   timesVoted++;
-  console.log(timesVoted);
-  if (timesVoted > numberRounds) {  //If we exceed the number of authorized click, disable the event listener
+  console.log(timesVoted, numberRounds);
+  if (timesVoted > numberRounds) { //If we exceed the number of authorized click, disable the event listener
     imageContainer.removeEventListener('click', clickHandler);
-    displayResults();
+
+
   }
   else {
     generateThreeImages();
@@ -121,7 +130,8 @@ new Product('wine-glass', 'img/wine-glass.jpg');
 
 generateThreeImages();
 displayImages();
-
+//TODO: Appears that clicking the results button or off the image will result in the clickHandler being activate.  If statment not catching it in function.
 imageContainer.addEventListener('click', clickHandler);
+document.getElementById('disp-results').addEventListener('click', displayResults);
 
 
