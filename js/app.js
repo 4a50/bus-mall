@@ -5,8 +5,10 @@ var allProducts = [];
 var prevImageDisplay = [];
 var selectedImages = [];
 var imageContainer = document.getElementById('image-display');
+/// Chart Vars
+var colorPaletteNumElements = [];
+var borderColorPaletteNumElements = [];
 var labelTitles = [];
-
 
 function Product(fileName, filePath) {
   this.titleAlt = fileName;
@@ -109,39 +111,56 @@ function clickHandler(event) {
   displayChart();
 }
 
-function chartVarSetup() {
-  var colorPalette = ['rgba(0, 0, 255, 0.3)', //blue
-    'rgba(255, 0, 0, 0.3)', //red
-    'rgba(255, 255, 0, 0.3)',//yellow
-    'rgba(0, 255, 0, 0.3)', //green
-    'rgba(102, 0, 255, 0.3)', //purple
-    'rgba(0,0,0,0.3)']; //black
-  var colorPaletteNumElements = [];
+function chartColorPaletteSetup() { //color and border color setup
+  if (colorPaletteNumElements.length !== allProducts.length) {
 
-  var borderColorPalette = [
-    'rgba(255, 99, 132, 1)',
-    'rgba(54, 162, 235, 1)',
-    'rgba(255, 206, 86, 1)',
-    'rgba(75, 192, 192, 1)',
-    'rgba(153, 102, 255, 1)',
-    'rgba(255, 159, 64, 1)'
-  ];
-  var productClickData = [];
-  var colorPaletterCounter = 0;
-  for (var i = 0; i < allProducts.length; i++) {
+    var colorPalette = ['rgba(0, 0, 255, 0.3)', //blue
+      'rgba(255, 0, 0, 0.3)', //red
+      'rgba(255, 255, 0, 0.3)',//yellow
+      'rgba(0, 255, 0, 0.3)', //green
+      'rgba(102, 0, 255, 0.3)', //purple
+      'rgba(0,0,0,0.3)']; //black
+    colorPaletteNumElements = [];
+    var t = 0;
+    for (var i = 0; i < allProducts.length; i++) {
 
-    if (labelTitles.length < allProducts.length) {
-      labelTitles.push(allProducts[i].titleAlt);
+      colorPaletteNumElements.push(colorPalette[t]);
+      t++;
+      if (t >= colorPalette.length) { t = 0; }
     }
-    if (borderColorPalette.length < allProducts.length) {
-
-      colorPaletteNumElements.push(borderColorPalette[i]);
-    }
-    colorPaletterCounter++
-    productClickData.push(allProducts[i].numberClicks);
   }
 
+  if (borderColorPaletteNumElements !== allProducts.length) {
+    borderColorPaletteNumElements = [];
 
+    var borderColorPalette = [
+      'rgba(255, 99, 132, 1)',
+      'rgba(54, 162, 235, 1)',
+      'rgba(255, 206, 86, 1)',
+      'rgba(75, 192, 192, 1)',
+      'rgba(153, 102, 255, 1)',
+      'rgba(255, 159, 64, 1)'
+    ];
+  }
+  var colorsToBeUsed = [colorPaletteNumElements, borderColorPaletteNumElements];
+  return
+}
+
+function chartTitleArray() {
+
+}
+
+function chartDataSetup() {
+
+
+  /// Set up the color palette.  Using colorPaletteNumElements[]
+  /// Set up the title Arrays
+
+
+
+  /// set up the data Arrays
+
+  debugger
 }
 
 function displayChart() {
@@ -194,9 +213,11 @@ new Product('shark', 'img/shark.jpg');
 new Product('unicorn', 'img/unicorn.jpg');
 new Product('wine-glass', 'img/wine-glass.jpg');
 
-generateThreeImages();
-displayImages();
-displayChart();
+chartVarSetup();
+chartVarSetup();
+// generateThreeImages();
+// displayImages();
+// displayChart();
 //TODO: Appears that clicking the results button or off the image will result in the clickHandler being activate.  If statement not catching it in function.
 imageContainer.addEventListener('click', clickHandler);
 document.getElementById('disp-results').addEventListener('click', displayResults);
