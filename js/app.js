@@ -44,7 +44,7 @@ function generateThreeImages() { //You will generate three different index numbe
 
     }
 
-    selectedImages.push(randomImageIndex); //add the image index be to one of the three to be used    
+    selectedImages.push(randomImageIndex); //add the image index be to one of the three to be used
     updateNumberDisplayed(randomImageIndex);
   }
 }
@@ -118,7 +118,7 @@ function chartColorPaletteSetup() { //color and border color setup returns color
     'rgba(255, 255, 0, 0.3)',//yellow
     'rgba(0, 255, 0, 0.3)', //green
     'rgba(102, 0, 255, 0.3)', //purple
-    'rgba(0,0,0,0.3)']; //black  
+    'rgba(0,0,0,0.3)']; //black
   for (var i = 0; i < allProducts.length; i++) {
     colorPaletteNumElements.push(colorPalette[t]);
     t++;
