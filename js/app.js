@@ -5,10 +5,7 @@ var allProducts = [];
 var prevImageDisplay = [];
 var selectedImages = [];
 var imageContainer = document.getElementById('image-display');
-/// Chart Vars
-var colorPaletteNumElements = [];
-var borderColorPaletteNumElements = [];
-var labelTitles = [];
+
 
 function Product(fileName, filePath) {
   this.titleAlt = fileName;
@@ -112,66 +109,60 @@ function clickHandler(event) {
 }
 
 function chartColorPaletteSetup() { //color and border color setup returns colorArray and borderColorArray
+  var colorPaletteNumElements = [];
+  var borderColorPaletteNumElements = [];
   var t = 0;
-  console.log('Color Palettes', colorPaletteNumElements.length, allProducts.length);
-  if (colorPaletteNumElements.length !== allProducts.length) {
-    console.log('in colorPalette if statement');
 
-    var colorPalette = ['rgba(0, 0, 255, 0.3)', //blue
-      'rgba(255, 0, 0, 0.3)', //red
-      'rgba(255, 255, 0, 0.3)',//yellow
-      'rgba(0, 255, 0, 0.3)', //green
-      'rgba(102, 0, 255, 0.3)', //purple
-      'rgba(0,0,0,0.3)']; //black
-    colorPaletteNumElements = [];
-    t = 0;
-    for (var i = 0; i < allProducts.length; i++) {
-
-      colorPaletteNumElements.push(colorPalette[t]);
-      t++;
-      if (t >= colorPalette.length) { t = 0; }
-    }
-  }
-  console.log('Border Palettes: ', borderColorPaletteNumElements.length, allProducts.length);
-
-  if (borderColorPaletteNumElements.length !== allProducts.length) {
-    console.log('in borderColorPalette if statement');
-    borderColorPaletteNumElements = [];
-    var borderColorPalette = [
-      'rgba(255, 99, 132, 1)',
-      'rgba(54, 162, 235, 1)',
-      'rgba(255, 206, 86, 1)',
-      'rgba(75, 192, 192, 1)',
-      'rgba(153, 102, 255, 1)',
-      'rgba(255, 159, 64, 1)'
-    ];
-    t = 0;
-    for (var j = 0; j < allProducts.length; j++) {
-      borderColorPaletteNumElements.push(borderColorPalette[t]);
-      t++;
-      if (t >= colorPalette.length) { t = 0; }
-    }
-
+  var colorPalette = ['rgba(0, 0, 255, 0.3)', //blue
+    'rgba(255, 0, 0, 0.3)', //red
+    'rgba(255, 255, 0, 0.3)',//yellow
+    'rgba(0, 255, 0, 0.3)', //green
+    'rgba(102, 0, 255, 0.3)', //purple
+    'rgba(0,0,0,0.3)']; //black  
+  for (var i = 0; i < allProducts.length; i++) {
+    colorPaletteNumElements.push(colorPalette[t]);
+    t++;
+    if (t >= colorPalette.length) { t = 0; }
   }
 
+  borderColorPaletteNumElements = [];
+  var borderColorPalette = [
+    'rgba(255, 99, 132, 1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)'
+  ];
+  t = 0;
+  for (var j = 0; j < allProducts.length; j++) {
+    borderColorPaletteNumElements.push(borderColorPalette[t]);
+    t++;
+    if (t >= colorPalette.length) { t = 0; }
+  }
   return [colorPaletteNumElements, borderColorPaletteNumElements];
 }
 
 function chartTitleArray() {
-
+  var titleArray = []
+  for (var i = 0; i < allProducts.length; i++) {
+    titleArray.push(allProducts[i].titleAlt);
+  }
+  debugger
+  return titleArray;
 }
 
 function chartDataSetup() {
 
 
-  /// Set up the color palette.  Using colorPaletteNumElements[]
+
   /// Set up the title Arrays
 
 
 
   /// set up the data Arrays
 
-  debugger
+
 }
 
 function displayChart() {
@@ -233,5 +224,4 @@ imageContainer.addEventListener('click', clickHandler);
 document.getElementById('disp-results').addEventListener('click', displayResults);
 
 
-chartColorPaletteSetup();
-chartColorPaletteSetup();
+chartTitleArray();
