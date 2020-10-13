@@ -25,17 +25,13 @@ function generateRandomNumber(max) {
 /// RESULT: Three images that can be displayed.
 
 function generateThreeImages() { //You will generate three different index numbers for me
-  prevImageDisplay = selectedImages;
+
   selectedImages = [];
   var areConditionsTrue;
   for (var i = 0; i < 3; i++) { //This loop will make three choices.
     areConditionsTrue = false;
     while (!areConditionsTrue) {
-      ///keep looping if:
-      /// selectedImages one of the random numbers in it
-      /// also if the prevImageDisplay[] has one of the numbers in it.
       var randomImageIndex = generateRandomNumber(allProducts.length);
-
       if (selectedImages.includes(randomImageIndex) || prevImageDisplay.includes(randomImageIndex)) {
         randomImageIndex = generateRandomNumber(allProducts.length);
       } else {
@@ -81,7 +77,7 @@ function clickHandler(event) {
   //search through each product until found, if not throw new error
   //console.log(event.target.title);
 
-  if (event.target.title === 'button' || '' || undefined || NaN) {
+  if (event.target.title === 'button' || event.target.title === '' || event.target.title === undefined) {
     console.log('Image Not Selected');
     return;
   }
