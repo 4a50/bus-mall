@@ -1,1 +1,13 @@
+h4 {
+  font-size: 32px;
+}
 
+html {
+  width: 1200px;
+}
+
+.voteChoice{  
+  border: 10px solid purple;
+  width: 350px;
+  /* height: 400px; */
+}

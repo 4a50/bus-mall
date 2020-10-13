@@ -5,6 +5,8 @@ var allProducts = [];
 var prevImageDisplay = [];
 var selectedImages = [];
 var imageContainer = document.getElementById('image-display');
+// var btn = document.querySelector('#btn');
+
 function Product(fileName, filePath) {
   this.titleAlt = fileName;
   this.filePath = filePath;
@@ -62,7 +64,7 @@ function displayImages() {
 
 function displayResults() { //Displays the final results after all rounds are complete
   var attachMain = document.getElementById('results-display');
-  debugger;
+
   console.log(attachMain);
   var getP;
   for (var i = 0; i < allProducts.length; i++) {
