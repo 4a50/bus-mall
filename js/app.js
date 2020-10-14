@@ -111,6 +111,8 @@ function clickHandler(event) {
   if (timesVoted >= numberRounds) { //If we exceed the number of authorized click, disable the event listener
     imageContainer.removeEventListener('click', clickHandler);
     displayChart();
+    //Save everything to local storage
+    saveToLocalStorage(allProducts, 'allProducts');
 
 
   }
@@ -125,6 +127,7 @@ function clickHandler(event) {
 function chartTitleArray() {
   var titleArray = [];
   for (var i = 0; i < allProducts.length; i++) {
+
     titleArray.push(allProducts[i].titleAlt);
   }
   return titleArray;
@@ -231,19 +234,19 @@ function firstRun(storageKey) { //This will determine whether to build the objec
 function rebuildInstancesFromObjLiteral(objLiteralArray) {
   allProducts = [];
   var objectInstance;
-  console.log('Object Literal Array: ', objLiteralArray);
-  console.log('initial allProducts Array: ', allProducts);
+
   for (var i = 0; i < objLiteralArray.length; i++) {
-    objectInstance = new Product(objLiteralArray[i].fileName, objLiteralArray[i].filePath);
+    objectInstance = new Product(objLiteralArray[i].titleAlt, objLiteralArray[i].filePath);
     objectInstance.numberClicks = objLiteralArray[i].numberClicks;
     objectInstance.numberDisplayed = objLiteralArray[i].numberDisplayed;
+
   }
-  console.log('rebuilt allProducts Array: ', allProducts);
+  console.log('rebuilt allProducts Array from objLiteral');
 }
 
 function checkLocalStorage(storageKey) {
   var hasStorage;
-  console.log('storageKey: ', storageKey);
+
   if (storageKey === null) {
     hasStorage = false;
   } else
@@ -258,10 +261,10 @@ function parseDataArray(retrievedDataArray) {  //Will output the parsedJSON arra
   return JSON.parse(retrievedDataArray);
 }
 function saveToLocalStorage(arrayName = [], storageKey = 'allProducts') {
-  console.log('storageKey: ', storageKey, 'arrayName: ', arrayName);
+  // console.log('storageKey: ', storageKey, 'arrayName: ', arrayName);
   var stringifyArray = JSON.stringify(arrayName);
   localStorage.setItem(storageKey, stringifyArray);
-
+  console.log(`saved to Storage: ${stringifyArray}`);
 
 }
 
@@ -269,7 +272,13 @@ function saveToLocalStorage(arrayName = [], storageKey = 'allProducts') {
 firstRun('allProducts');
 //allProducts object array should be created.
 
+//Voting Functions:
+generateThreeImages();
+displayImages();
 
+//Event Listeners:
+imageContainer.addEventListener('click', clickHandler);
+document.getElementById('disp-results').addEventListener('click', displayResults);
 
 
 
