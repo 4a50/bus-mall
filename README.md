@@ -11,12 +11,18 @@ Tall the results in a bar graph.
 
 ### Contributors
 
-Simon Panek
-Kjell Overholt
-Stacy Burris
++ Simon Panek
++ Kjell Overholt
++ Stacy Burris
++ Nathan Cox
 
 ### Resources
 
 [chartjs](https://www.chartjs.org/)
+
 [w3 Schools](https://www.w3schools.com)
+
 [MDN](https://developer.mozilla.org/en-US/)
+
+[Creating a Bar Graph using Chart.js - Multiple Datasets](https://codepen.io/Shokeen/pen/NpgbKg)
+
