@@ -18,22 +18,7 @@ function generateRandomNumber(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-function localStore() {
-  //converting to JSON
-  var stringifyAllProducts = JSON.stringify(allProducts);
-  // console.log(stringifyAllProducts);
-  //put JSON into local storage
-  localStorage.setItem('allProducts', stringifyAllProducts);
-  //retrieve the item
-  var fromLocalStorage = localStorage.getItem('allProducts');
-  // console.log('retrieved: ' + fromLocalStorage);
-  //translate back to javascript (parse JSON to JS)
-  var parsedFromLocaleStorage = JSON.parse(fromLocalStorage);
-  // console.log('parsed allProducts: ', parsedFromLocaleStorage);
-  // When parsed loose connection to the constructor. They are all object literals
-  // If you need to re-establish to constructor: loop over all the object literals and create new object instances
-  return parsedFromLocaleStorage;
-}
+
 
 /// Grab three Random images <=Function
 /// Cannot be any previously display
@@ -43,21 +28,27 @@ function localStore() {
 function generateThreeImages() { //You will generate three different index numbers for me
 
   selectedImages = [];
-  var areConditionsTrue;
-  for (var i = 0; i < 3; i++) { //This loop will make three choices.
-    areConditionsTrue = false;
-    while (!areConditionsTrue) {
-      var randomImageIndex = generateRandomNumber(allProducts.length);
-      if (selectedImages.includes(randomImageIndex) || prevImageDisplay.includes(randomImageIndex)) {
-        randomImageIndex = generateRandomNumber(allProducts.length);
-      } else {
-        areConditionsTrue = true;
-      }
 
+  for (var i = 0; i < 3; i++) { //This loop will make three choices.
+    var randomImageIndex = generateRandomNumber(allProducts.length);
+    while (prevImageDisplay.includes(randomImageIndex)) {
+      randomImageIndex = generateRandomNumber(allProducts.length);
+      console.log('randomImageIndex: ' + randomImageIndex);
+    }
+    console.log('----------------------------');
+    console.log('random Number: ', randomImageIndex);
+    console.log(`Previous numbers: ${prevImageDisplay}`);
+    console.log('----------------------------');
+    prevImageDisplay.push(randomImageIndex);
+    if (prevImageDisplay.length > 5) {
+      prevImageDisplay.shift();
     }
 
+
     selectedImages.push(randomImageIndex); //add the image index be to one of the three to be used
+
     updateNumberDisplayed(randomImageIndex);
+
   }
 }
 function updateNumberDisplayed(indexNum) {
@@ -279,12 +270,3 @@ displayImages();
 //Event Listeners:
 imageContainer.addEventListener('click', clickHandler);
 document.getElementById('disp-results').addEventListener('click', displayResults);
-
-
-
-// Testing Sequence:
-// createNewObjects();
-// console.log(allProducts);
-// saveToLocalStorage(allProducts);
-// var retrieved = retrieveFromLocalStorage('allProducts');
-// rebuildInstances(retrieved);
