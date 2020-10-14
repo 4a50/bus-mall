@@ -18,6 +18,23 @@ function generateRandomNumber(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+function localStore() {
+  //converting to JSON
+  var stringifyAllProducts = JSON.stringify(allProducts);
+  // console.log(stringifyAllProducts);
+  //put JSON into local storage
+  localStorage.setItem('allProducts', stringifyAllProducts);
+  //retrieve the item
+  var fromLocalStorage = localStorage.getItem('allProducts');
+  // console.log('retrieved: ' + fromLocalStorage);
+  //translate back to javascript (parse JSON to JS)
+  var parsedFromLocaleStorage = JSON.parse(fromLocalStorage);
+  // console.log('parsed allProducts: ', parsedFromLocaleStorage);
+  // When parsed loose connection to the constructor. They are all object literals
+  // If you need to re-establish to constructor: loop over all the object literals and create new object instances
+  return parsedFromLocaleStorage;
+}
+
 /// Grab three Random images <=Function
 /// Cannot be any previously display
 /// Cannot have any repeated.
@@ -172,30 +189,72 @@ function displayChart() {
     });
 }
 
-new Product('bathroom', 'img/bathroom.jpg'); // fileName, filePath
-new Product('bubblegum', 'img/bubblegum.jpg');
-new Product('dog-duck', 'img/dog-duck.jpg');
-new Product('pet-sweep', 'img/pet-sweep.jpg');
-new Product('sweep', 'img/sweep.png');
-new Product('usb', 'img/usb.gif');
-new Product('bag', 'img/bag.jpg');
-new Product('boots', 'img/boots.jpg');
-new Product('chair', 'img/chair.jpg');
-new Product('dragon', 'img/dragon.jpg');
-new Product('scissors', 'img/scissors.jpg');
-new Product('tauntaun', 'img/tauntaun.jpg');
-new Product('water-can', 'img/water-can.jpg');
-new Product('banana', 'img/banana.jpg');
-new Product('breakfast', 'img/breakfast.jpg');
-new Product('cthulhu', 'img/cthulhu.jpg');
-new Product('pen', 'img/pen.jpg');
-new Product('shark', 'img/shark.jpg');
-new Product('unicorn', 'img/unicorn.jpg');
-new Product('wine-glass', 'img/wine-glass.jpg');
+function createNewObjects() {
+  new Product('bathroom', 'img/bathroom.jpg'); // fileName, filePath
+  new Product('bubblegum', 'img/bubblegum.jpg');
+  new Product('dog-duck', 'img/dog-duck.jpg');
+  new Product('pet-sweep', 'img/pet-sweep.jpg');
+  new Product('sweep', 'img/sweep.png');
+  new Product('usb', 'img/usb.gif');
+  new Product('bag', 'img/bag.jpg');
+  new Product('boots', 'img/boots.jpg');
+  new Product('chair', 'img/chair.jpg');
+  new Product('dragon', 'img/dragon.jpg');
+  new Product('scissors', 'img/scissors.jpg');
+  new Product('tauntaun', 'img/tauntaun.jpg');
+  new Product('water-can', 'img/water-can.jpg');
+  new Product('banana', 'img/banana.jpg');
+  new Product('breakfast', 'img/breakfast.jpg');
+  new Product('cthulhu', 'img/cthulhu.jpg');
+  new Product('pen', 'img/pen.jpg');
+  new Product('shark', 'img/shark.jpg');
+  new Product('unicorn', 'img/unicorn.jpg');
+  new Product('wine-glass', 'img/wine-glass.jpg');
+}
+//Local Storage Functions
+function checkLocalStorage(storageKey) {
+  var hasStorage;
+  console.log('storageKey: ', storageKey);
+  if (storageKey !== null) {
+    hasStorage = true;
+  } else
+    hasStorage = false;
+  return hasStorage;
+}
+function retrieveFromLocalStorage(storageKey) {
+  var storedInfo = localStorage.getItem(storageKey); //should be allProducts
+  if (storedInfo === null) {
+    console.log('No data to retrieve.  Exiting Function');
+    return;
+  }
+  var parsedStorage = JSON.parse(storedInfo);
+  allProducts = [];
+  for (var i = 0; i < parsedStorage.length; i++) {
+    // parsedStorage[i].
+  }
 
+}
+function saveToLocalStorage(storageKey = 'allProducts', arrayName = []) {
+  var stringifyArray = JSON.stringify(arrayName);
+  localStorage.setItem(storageKey, stringifyArray);
 
-generateThreeImages();
-displayImages();
-//TODO: Appears that clicking the results button or off the image will result in the clickHandler being activate.  If statement not catching it in function.
-imageContainer.addEventListener('click', clickHandler);
-document.getElementById('disp-results').addEventListener('click', displayResults);
+}
+function firstRun() { //This will determine whether to build the objects, or pull from local storage
+  var fromLocalStorage = localStorage.getItem('allProducts');
+  var hasLocalStorage = checkLocalStorage(fromLocalStorage);
+  //console.log('hasLocalStorage: ', hasLocalStorage);
+
+  if (hasLocalStorage) {
+    console.log('pulled from storage.  running function to instantiate all the literals.');
+    ///create a function to instantiate all of the objects from the literals
+  } else {
+    createNewObjects();
+    console.log('created new instances');
+  }
+
+}
+
+firstRun();
+console.log(allProducts);
+saveToLocalStorage('allProducts', allProducts);
+
