@@ -188,8 +188,9 @@ function displayChart() {
 
     });
 }
-
+// Create new instances
 function createNewObjects() {
+  allProducts = [];
   new Product('bathroom', 'img/bathroom.jpg'); // fileName, filePath
   new Product('bubblegum', 'img/bubblegum.jpg');
   new Product('dog-duck', 'img/dog-duck.jpg');
@@ -212,49 +213,69 @@ function createNewObjects() {
   new Product('wine-glass', 'img/wine-glass.jpg');
 }
 //Local Storage Functions
-function checkLocalStorage(storageKey) {
-  var hasStorage;
-  console.log('storageKey: ', storageKey);
-  if (storageKey !== null) {
-    hasStorage = true;
-  } else
-    hasStorage = false;
-  return hasStorage;
-}
-function retrieveFromLocalStorage(storageKey) {
-  var storedInfo = localStorage.getItem(storageKey); //should be allProducts
-  if (storedInfo === null) {
-    console.log('No data to retrieve.  Exiting Function');
-    return;
-  }
-  var parsedStorage = JSON.parse(storedInfo);
-  allProducts = [];
-  for (var i = 0; i < parsedStorage.length; i++) {
-    // parsedStorage[i].
-  }
-
-}
-function saveToLocalStorage(storageKey = 'allProducts', arrayName = []) {
-  var stringifyArray = JSON.stringify(arrayName);
-  localStorage.setItem(storageKey, stringifyArray);
-
-}
-function firstRun() { //This will determine whether to build the objects, or pull from local storage
-  var fromLocalStorage = localStorage.getItem('allProducts');
-  var hasLocalStorage = checkLocalStorage(fromLocalStorage);
-  //console.log('hasLocalStorage: ', hasLocalStorage);
+function firstRun(storageKey) { //This will determine whether to build the objects, or pull from local storage
+  var fromLocalStorage = localStorage.getItem(storageKey); //Attempt to retrieve storage
+  var hasLocalStorage = checkLocalStorage(fromLocalStorage); //true or false
 
   if (hasLocalStorage) {
     console.log('pulled from storage.  running function to instantiate all the literals.');
-    ///create a function to instantiate all of the objects from the literals
+    var parsedData = parseDataArray(fromLocalStorage); //Converted to JS from JSON
+    rebuildInstancesFromObjLiteral(parsedData);
+
   } else {
     createNewObjects();
     console.log('created new instances');
   }
+  //OUTCOME: allProducts Objects are created and populated.
+}
+function rebuildInstancesFromObjLiteral(objLiteralArray) {
+  allProducts = [];
+  var objectInstance;
+  console.log('Object Literal Array: ', objLiteralArray);
+  console.log('initial allProducts Array: ', allProducts);
+  for (var i = 0; i < objLiteralArray.length; i++) {
+    objectInstance = new Product(objLiteralArray[i].fileName, objLiteralArray[i].filePath);
+    objectInstance.numberClicks = objLiteralArray[i].numberClicks;
+    objectInstance.numberDisplayed = objLiteralArray[i].numberDisplayed;
+  }
+  console.log('rebuilt allProducts Array: ', allProducts);
+}
+
+function checkLocalStorage(storageKey) {
+  var hasStorage;
+  console.log('storageKey: ', storageKey);
+  if (storageKey === null) {
+    hasStorage = false;
+  } else
+    hasStorage = true;
+  return hasStorage;
+}
+function parseDataArray(retrievedDataArray) {  //Will output the parsedJSON array.
+  if (retrievedDataArray === null) { //Another check to see if there is data
+    console.log('No data to retrieve.  Exiting Function');
+    return;
+  }
+  return JSON.parse(retrievedDataArray);
+}
+function saveToLocalStorage(arrayName = [], storageKey = 'allProducts') {
+  console.log('storageKey: ', storageKey, 'arrayName: ', arrayName);
+  var stringifyArray = JSON.stringify(arrayName);
+  localStorage.setItem(storageKey, stringifyArray);
+
 
 }
 
-firstRun();
-console.log(allProducts);
-saveToLocalStorage('allProducts', allProducts);
 
+firstRun('allProducts');
+//allProducts object array should be created.
+
+
+
+
+
+// Testing Sequence:
+// createNewObjects();
+// console.log(allProducts);
+// saveToLocalStorage(allProducts);
+// var retrieved = retrieveFromLocalStorage('allProducts');
+// rebuildInstances(retrieved);
