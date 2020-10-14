@@ -149,56 +149,124 @@ function chartTitleArray() {
 
 function chartDataSetup() {
   var chartData = [];
+  var chartViews = [];
   for (var i = 0; i < allProducts.length; i++) {
     chartData.push(allProducts[i].numberClicks);
+    chartViews.push(allProducts[i].numberDisplayed);
   }
-  return chartData;
+  return [chartData, chartViews];
 }
 
 function displayChart() {
 
+  var densityCanvas = document.getElementById('myChart').getContext('2d');
 
+  var chartData = chartDataSetup();
+  var chartTitles = chartTitleArray()
 
-  var graphColors = chartColorPaletteSetup();
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: chartTitleArray(),
-      datasets: [{
-        label: '# of Votes',
-        data: chartDataSetup(),
-        backgroundColor: graphColors[0],
-        borderColor: graphColors[1],
-        borderWidth: 3
+  console.log(chartData[0], chartData[1], chartTitles);
+  var voteInfo = {
+    label: 'Number of Votes',
+    data: chartData[0],
+    backgroundColor: 'rgba(128,0,128, 0.6)',
+    borderWidth: 0,
+    //yAxisID: "y-axis-votes"
+  };
+
+  var viewInfo = {
+    label: 'Amount Viewed',
+    data: chartData[1],
+    backgroundColor: 'rgba(0, 0, 255, 0.6)',
+    borderWidth: 0,
+    yAxisID: "y-axis-votes"//"y-axis-views"
+  };
+
+  var productTitle = {
+    labels: chartTitles,
+    datasets: [voteInfo, viewInfo]
+  };
+
+  var chartOptions = {
+    scales: {
+      // xAxes: [{
+      //   barPercentage: 1,
+      //   categoryPercentage: 0.6
+      // }],
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+        },
+        id: "y-axis-votes"
+      }, {
+        //   id: "y-axis-views"
+        // }]
       }]
-    },
-    options: {
-      legend: {
-        labels: {
-          fontSize: 30,
-          fontColor: 'purple',
-
-          scales: {
-            xAxes: [{
-              ticks: {
-                fontSize: 30,
-                fontColor: 'purple'
-              }
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-                fontSize: 24,
-                fontColor: 'purple'
-              }
-            }]
-          }
-        }
-      }
     }
-  });
+  };
+
+  var barChart = new Chart(densityCanvas,
+    {
+      type: 'bar',
+      data: productTitle,
+      options: chartOptions,
+      scaleOverride: true,
+      scaleSteps: 50,
+      scaleStepWidth: 5,
+      scaleStartValue: 0
+    });
+
+  ///
+  // window.myLine = new Chart(ctx).Line(lineChartData, {
+
+  // });
+  debugger
 }
+
+
+
+
+///
+
+// var graphColors = chartColorPaletteSetup();
+// var ctx = document.getElementById('myChart').getContext('2d');
+// var myChart = new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//     labels: chartTitleArray(),
+//     datasets: [{
+//       label: '# of Votes',
+//       data: chartDataSetup(),
+//       backgroundColor: graphColors[0],
+//       borderColor: graphColors[1],
+//       borderWidth: 3
+//     }]
+//   },
+//   options: {
+//     legend: {
+//       labels: {
+//         fontSize: 30,
+//         fontColor: 'purple',
+
+//         scales: {
+//           xAxes: [{
+//             ticks: {
+//               fontSize: 30,
+//               fontColor: 'purple'
+//             }
+//           }],
+//           yAxes: [{
+//             ticks: {
+//               beginAtZero: true,
+//               fontSize: 24,
+//               fontColor: 'purple'
+//             }
+//           }]
+//         }
+//       }
+//     }
+//   }
+// });
+//}
 new Product('bathroom', 'img/bathroom.jpg'); // fileName, filePath
 new Product('bubblegum', 'img/bubblegum.jpg');
 new Product('dog-duck', 'img/dog-duck.jpg');
