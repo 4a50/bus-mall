@@ -6,7 +6,6 @@ var prevImageDisplay = [];
 var selectedImages = [];
 var imageContainer = document.getElementById('image-display');
 
-
 function Product(fileName, filePath) {
   this.titleAlt = fileName;
   this.filePath = filePath;
@@ -92,7 +91,7 @@ function clickHandler(event) {
   }
   timesVoted++;
   //console.log(timesVoted, numberRounds);
-  if (timesVoted > numberRounds) { //If we exceed the number of authorized click, disable the event listener
+  if (timesVoted >= numberRounds) { //If we exceed the number of authorized click, disable the event listener
     imageContainer.removeEventListener('click', clickHandler);
     displayChart();
 
@@ -104,40 +103,7 @@ function clickHandler(event) {
   }
 }
 
-function chartColorPaletteSetup() { //color and border color setup returns colorArray and borderColorArray
-  var colorPaletteNumElements = [];
-  var borderColorPaletteNumElements = [];
-  var t = 0;
 
-  var colorPalette = ['rgba(0, 0, 255, 0.3)', //blue
-    'rgba(255, 0, 0, 0.3)', //red
-    'rgba(255, 255, 0, 0.3)',//yellow
-    'rgba(0, 255, 0, 0.3)', //green
-    'rgba(102, 0, 255, 0.3)', //purple
-    'rgba(0,0,0,0.3)']; //black
-  for (var i = 0; i < allProducts.length; i++) {
-    colorPaletteNumElements.push(colorPalette[t]);
-    t++;
-    if (t >= colorPalette.length) { t = 0; }
-  }
-
-  borderColorPaletteNumElements = [];
-  var borderColorPalette = [
-    'rgba(255, 99, 132, 1)',
-    'rgba(54, 162, 235, 1)',
-    'rgba(255, 206, 86, 1)',
-    'rgba(75, 192, 192, 1)',
-    'rgba(153, 102, 255, 1)',
-    'rgba(255, 159, 64, 1)'
-  ];
-  t = 0;
-  for (var j = 0; j < allProducts.length; j++) {
-    borderColorPaletteNumElements.push(borderColorPalette[t]);
-    t++;
-    if (t >= colorPalette.length) { t = 0; }
-  }
-  return [colorPaletteNumElements, borderColorPaletteNumElements];
-}
 
 function chartTitleArray() {
   var titleArray = [];
@@ -162,7 +128,7 @@ function displayChart() {
   var densityCanvas = document.getElementById('myChart').getContext('2d');
 
   var chartData = chartDataSetup();
-  var chartTitles = chartTitleArray()
+  var chartTitles = chartTitleArray();
 
   console.log(chartData[0], chartData[1], chartTitles);
   var voteInfo = {
@@ -170,7 +136,6 @@ function displayChart() {
     data: chartData[0],
     backgroundColor: 'rgba(128,0,128, 0.6)',
     borderWidth: 0,
-    //yAxisID: "y-axis-votes"
   };
 
   var viewInfo = {
@@ -178,7 +143,7 @@ function displayChart() {
     data: chartData[1],
     backgroundColor: 'rgba(0, 0, 255, 0.6)',
     borderWidth: 0,
-    yAxisID: "y-axis-votes"//"y-axis-views"
+    yAxisID: "y-axis-votes"
   };
 
   var productTitle = {
@@ -188,19 +153,13 @@ function displayChart() {
 
   var chartOptions = {
     scales: {
-      // xAxes: [{
-      //   barPercentage: 1,
-      //   categoryPercentage: 0.6
-      // }],
+
       yAxes: [{
         ticks: {
-          beginAtZero: true,
+          beginAtZero: true
         },
         id: "y-axis-votes"
-      }, {
-        //   id: "y-axis-views"
-        // }]
-      }]
+      },]
     }
   };
 
@@ -209,64 +168,10 @@ function displayChart() {
       type: 'bar',
       data: productTitle,
       options: chartOptions,
-      scaleOverride: true,
-      scaleSteps: 50,
-      scaleStepWidth: 5,
-      scaleStartValue: 0
+
     });
-
-  ///
-  // window.myLine = new Chart(ctx).Line(lineChartData, {
-
-  // });
-  debugger
 }
 
-
-
-
-///
-
-// var graphColors = chartColorPaletteSetup();
-// var ctx = document.getElementById('myChart').getContext('2d');
-// var myChart = new Chart(ctx, {
-//   type: 'bar',
-//   data: {
-//     labels: chartTitleArray(),
-//     datasets: [{
-//       label: '# of Votes',
-//       data: chartDataSetup(),
-//       backgroundColor: graphColors[0],
-//       borderColor: graphColors[1],
-//       borderWidth: 3
-//     }]
-//   },
-//   options: {
-//     legend: {
-//       labels: {
-//         fontSize: 30,
-//         fontColor: 'purple',
-
-//         scales: {
-//           xAxes: [{
-//             ticks: {
-//               fontSize: 30,
-//               fontColor: 'purple'
-//             }
-//           }],
-//           yAxes: [{
-//             ticks: {
-//               beginAtZero: true,
-//               fontSize: 24,
-//               fontColor: 'purple'
-//             }
-//           }]
-//         }
-//       }
-//     }
-//   }
-// });
-//}
 new Product('bathroom', 'img/bathroom.jpg'); // fileName, filePath
 new Product('bubblegum', 'img/bubblegum.jpg');
 new Product('dog-duck', 'img/dog-duck.jpg');
