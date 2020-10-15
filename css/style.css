@@ -2,10 +2,10 @@ html {
   width: 1400px;
 }
 h1 {
-  font-size: 129px;
+  font-size: 111px;
   text-align: center;
   font-family: 'Righteous', cursive;
-  padding: 40px 0px;
+  padding: 5px 0px;
  
 }
 h2 {
@@ -13,34 +13,92 @@ h2 {
   text-align: center;
   font-family: 'Righteous', cursive;
 }
+h3 {
+  font-size: 40px;
+}
+
 h4 {
   font-size: 24px;
 }
 
+p, li{
+  font-size:25px;
+}
+ul, li{
+  list-style-type: disc;
+  list-style-position: inside;
+}
+li {
+  padding: 10px 10px;
+  line-height: 50%;
+}
+
+#block-one {
+  display: flex;
+  height: 750px;
+
+}
 header{
- padding: 50px 50px;
+ padding: 10px 10px;
  border: 3px solid purple;
  background-color: rgba(0, 0, 255, .6);
 }
-#images-3{
-  padding: 50px 50px;
+#voting-section-block{
+  display: flex;
+  flex-direction: column;
+}
+#results-section{
+  padding: 0px 20px;
+  border: 5px solid purple;
+  
+}
+#voting-section-block{
+  /* //padding: 50px 50px; */
   border: 3px solid purple;
-  background-color: rgba(0, 0, 255, .3);;
+  background-color: rgba(0, 0, 255, .3);
 }
 
-.voteChoice{  
-  border: 10px solid purple;
-  width: 350px;
-  
+label img{  
+  border: 2px solid purple;
+  width: 300px;
+  height: 300px;  
+}
+
+#button-section, #images-3 {
+  display: flex;
+  justify-content: center;
 }
 #disp-results {
   
-}
-#image-display button {
-  display: block;
-  color: white;
-  background-color: purple;
-  margin:25px 0px 0px 600px;
-  font-size: 43px;
+    margin: 10px;
+    font-size: 24px;
+    padding: 10px 300px;
+    border:5px solid purple;
+    border-radius: 10px;
+  
 }
 
+#paragraph-section {
+  padding: 10px 20px;
+}
+
+#results-list{
+  
+}
+.spacer{
+  padding: 0px 216px;
+}
+#form-section{
+  display: flex;
+  justify-content: center;
+}
+input{
+  
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  padding: 0px 10px;
+}
+.button-div{
+padding: 5px 134px;
+}

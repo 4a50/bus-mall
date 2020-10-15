@@ -18,13 +18,6 @@ function generateRandomNumber(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-
-
-/// Grab three Random images <=Function
-/// Cannot be any previously display
-/// Cannot have any repeated.
-/// RESULT: Three images that can be displayed.
-
 function generateThreeImages() { //You will generate three different index numbers for me
 
   selectedImages = [];
@@ -33,74 +26,87 @@ function generateThreeImages() { //You will generate three different index numbe
     var randomImageIndex = generateRandomNumber(allProducts.length);
     while (prevImageDisplay.includes(randomImageIndex)) {
       randomImageIndex = generateRandomNumber(allProducts.length);
-      console.log('randomImageIndex: ' + randomImageIndex);
     }
-    console.log('----------------------------');
-    console.log('random Number: ', randomImageIndex);
-    console.log(`Previous numbers: ${prevImageDisplay}`);
-    console.log('----------------------------');
     prevImageDisplay.push(randomImageIndex);
     if (prevImageDisplay.length > 5) {
       prevImageDisplay.shift();
+
     }
-
-
     selectedImages.push(randomImageIndex); //add the image index be to one of the three to be used
 
     updateNumberDisplayed(randomImageIndex);
-
   }
+
 }
+
 function updateNumberDisplayed(indexNum) {
+
+
   allProducts[indexNum].numberDisplayed++;
 
 }
 
 function displayImages() {
   var imgHTMLElements = [document.getElementById('image-1'), document.getElementById('image-2'), document.getElementById('image-3')];
+
   for (var i = 0; i < selectedImages.length; i++) {
     imgHTMLElements[i].src = allProducts[selectedImages[i]].filePath;
     imgHTMLElements[i].alt = allProducts[selectedImages[i]].titleAlt;
     imgHTMLElements[i].title = allProducts[selectedImages[i]].titleAlt;
+
   }
 }
 
+function getRadioButtonElement() {
+  const rbs = document.querySelectorAll('input[name="choice"]');
+  for (var i = 0; i < rbs.length; i++) {
+    if (rbs[i].checked) {
+      var grandParent = ((rbs[1].parentElement).parentElement);
+      var imgElement = grandParent.getElementsByTagName('img');
+
+      break;
+    }
+
+  }
+
+
+  return imgElement[0].title;
+}
 function displayResults() { //Displays the final results after all rounds are complete
-  var attachMain = document.getElementById('results-display');
+
+  var attachMain = document.getElementById('results-list');
   attachMain.innerHTML = '';
 
   var getP;
   for (var i = 0; i < allProducts.length; i++) {
-    getP = document.createElement('p');
-    getP.innerHTML = `${allProducts[i].titleAlt} had <span class="bold">${allProducts[i].numberClicks} votes</span>, and was seen <span class="bold">${allProducts[i].numberDisplayed} times</span>`;
+    getP = document.createElement('li');
+    getP.innerHTML = `${allProducts[i].titleAlt}: ${allProducts[i].numberClicks} votes`;
 
     attachMain.appendChild(getP);
   }
 
 }
 
-function clickHandler(event) {
+function clickHandler(event) {//event) {
   //Determine which product has the title of the event that was clicked.
   //search through each product until found, if not throw new error
-  //console.log(event.target.title);
 
-  if (event.target.title === 'button' || event.target.title === '' || event.target.title === undefined) {
+  var radioTitle = getRadioButtonElement();
+  if (!radioTitle) {
     console.log('Image Not Selected');
     return;
   }
-
-
   for (var i = 0; i < allProducts.length; i++) {//Searches for the matching target title to titleAlt
-    if (event.target.title === allProducts[i].titleAlt) {//if you find it, update the clicks and break the loop
+    if (radioTitle === allProducts[i].titleAlt) {//(event.target.title === allProducts[i].titleAlt) {//if you find it, update the clicks and break the loop
       allProducts[i].numberClicks++;
       break;
     }
-
   }
   timesVoted++;
-  //console.log(timesVoted, numberRounds);
+
   if (timesVoted >= numberRounds) { //If we exceed the number of authorized click, disable the event listener
     imageContainer.removeEventListener('click', clickHandler);
+    displayResults();
     displayChart();
     //Save everything to local storage
     saveToLocalStorage(allProducts, 'allProducts');
@@ -112,6 +118,7 @@ function clickHandler(event) {
     displayImages();
   }
 }
+
 
 
 
@@ -141,7 +148,7 @@ function displayChart() {
   var chartData = chartDataSetup();
   var chartTitles = chartTitleArray();
 
-  console.log(chartData[0], chartData[1], chartTitles);
+
   var voteInfo = {
     label: 'Number of Votes',
     data: chartData[0],
@@ -221,6 +228,7 @@ function firstRun(storageKey) { //This will determine whether to build the objec
     console.log('created new instances');
   }
   //OUTCOME: allProducts Objects are created and populated.
+
 }
 function rebuildInstancesFromObjLiteral(objLiteralArray) {
   allProducts = [];
@@ -252,7 +260,7 @@ function parseDataArray(retrievedDataArray) {  //Will output the parsedJSON arra
   return JSON.parse(retrievedDataArray);
 }
 function saveToLocalStorage(arrayName = [], storageKey = 'allProducts') {
-  // console.log('storageKey: ', storageKey, 'arrayName: ', arrayName);
+
   var stringifyArray = JSON.stringify(arrayName);
   localStorage.setItem(storageKey, stringifyArray);
   console.log(`saved to Storage: ${stringifyArray}`);
@@ -261,12 +269,12 @@ function saveToLocalStorage(arrayName = [], storageKey = 'allProducts') {
 
 
 firstRun('allProducts');
-//allProducts object array should be created.
+// //allProducts object array should be created.
 
-//Voting Functions:
+// //Voting Functions:
 generateThreeImages();
 displayImages();
 
-//Event Listeners:
-imageContainer.addEventListener('click', clickHandler);
-document.getElementById('disp-results').addEventListener('click', displayResults);
+// //Event Listeners:
+//imageContainer.addEventListener('click', clickHandler);
+document.getElementById('disp-results').addEventListener('click', clickHandler);//displayResults);
