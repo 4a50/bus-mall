@@ -16,25 +16,67 @@
   </header>
 
   <main>
+    <section id="block-one">
+      <section id="results-section">
+        <h3>Results</h3>
+        <ul id="results-list">
 
-    <section id="image-display">
-      <div id="images-3">
-        <img id="image-1" class="voteChoice" src="" alt="" title="">
-        <img id="image-2" class="voteChoice" src="" alt="" title="">
-        <img id="image-3" class="voteChoice" src="" alt="" title="">
-      </div>
-      <div id="button-container">
-        <button id="disp-results" title="button">Display Results</button>
-      </div>
-    </section>
-    <section id="results-display">
+        </ul>
+        <div class="spacer">
+        </div>
 
+
+      </section>
+      <section id="voting-section-block">
+        <section id="image-display">
+          <div id="images-3">
+
+            <form id="form-section">
+
+              <label>
+                <img id="image-1" class="voteChoice" src="" alt="" title="" value="">
+                <div class="button-div">
+                  <input type="radio" name="choice" value="image-1" checked></input>
+                </div>
+              </label>
+              <label>
+                <img id="image-2" class="voteChoice" src="" alt="" title="">
+                <div class="button-div">
+                  <input type="radio" name="choice" value="image-2"></input>
+                </div>
+              </label>
+              <label>
+                <img id="image-3" class="voteChoice" src="" alt="" title="">
+                <div class="button-div">
+                  <input type="radio" name="choice" value="image-3"></input>
+                </div>
+              </label>
+            </form>
+          </div>
+          <section id="button-section">
+            <div id="button-div">
+              <button id="disp-results" title="button">Vote</button>
+            </div>
+          </section>
+        </section>
+        <section id="paragraph-section">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vulputate ex eu quam rhoncus dictum. Duis
+            eros
+            purus, dignissim sed placerat interdum, tempus vitae mauris. Donec lacinia tellus vehicula leo tempus
+            congue.
+            Pellentesque scelerisque eget tortor quis viverra. Phasellus urna arcu, tincidunt quis tempor a, iaculis
+            vitae
+            velit. Integer eu tellus posuere, consectetur lacus vel, facilisis metus. Nunc nec mi felis. Etiam fringilla
+            lacus purus, ac ultrices mi sollicitudin eu.</p>
+        </section>
+      </section>
     </section>
-    <canvas id="myChart" width="1400" height="1200">
+    <canvas id="myChart" width="1400" height="700">
       <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
 
     </canvas>
+
   </main>
 
   <footer>
