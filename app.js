@@ -118,10 +118,6 @@ function clickHandler(event) {//event) {
     displayImages();
   }
 }
-
-
-
-
 function chartTitleArray() {
   var titleArray = [];
   for (var i = 0; i < allProducts.length; i++) {
